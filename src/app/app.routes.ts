@@ -1,3 +1,4 @@
+// src/app/app-routing.module.ts
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
@@ -14,6 +15,7 @@ import { PermissionsComponent } from './features/permissions/permissions.compone
 import { UserGroupsComponent } from './features/user-groups/user-groups.component';
 import { RejectionReasonsComponent } from './features/rejection-reasons/rejection-reasons.component';
 import { WeightSettingsComponent } from './features/weight-settings/weight-settings.component';
+import { AdminComponent } from './features/admin/admin.component'; 
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -31,6 +33,12 @@ export const routes: Routes = [
     component: OrdersComponent,
     canActivate: [AuthGuard],
     data: { roles: ['Admin', 'Merchant', 'Employee', 'DeliveryMan'] },
+  },
+  {
+    path: 'admin',
+    component: AdminComponent, // Use component directly instead of loadChildren
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] }
   },
   {
     path: 'areas',

@@ -14,8 +14,8 @@ export interface PaginatedResult<T> {
 }
 
 export interface PaginationParams {
-  pageNumber?: number;
-  pageSize?: number;
+  pageNumber: number;
+  pageSize: number;
   cityId?: number;
   governorateId?: number;
   name?: string;

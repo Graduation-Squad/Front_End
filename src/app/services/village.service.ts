@@ -12,14 +12,11 @@ export class VillageService {
 
   constructor(private http: HttpClient) {}
 
-  getVillages(params: PaginationParams = {}): Observable<PaginatedResult<Village>> {
-    let httpParams = new HttpParams();
-    if (params.pageNumber) {
-      httpParams = httpParams.set('pageNumber', params.pageNumber.toString());
-    }
-    if (params.pageSize) {
-      httpParams = httpParams.set('pageSize', params.pageSize.toString());
-    }
+  getVillages(params: PaginationParams): Observable<PaginatedResult<Village>> {
+    let httpParams = new HttpParams()
+      .set('pageNumber', params.pageNumber.toString())
+      .set('pageSize', params.pageSize.toString());
+
     if (params.cityId) {
       httpParams = httpParams.set('cityId', params.cityId.toString());
     }

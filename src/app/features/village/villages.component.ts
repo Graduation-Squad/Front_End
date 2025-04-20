@@ -17,8 +17,8 @@ import { Village, PaginatedResult, PaginationParams } from '../../models/village
         <input [(ngModel)]="params.cityId" name="cityId" type="number" placeholder="City ID" />
         <input [(ngModel)]="params.governorateId" name="governorateId" type="number" placeholder="Governorate ID" />
         <input [(ngModel)]="params.name" name="name" placeholder="Village Name" />
-        <input [(ngModel)]="params.pageNumber" name="pageNumber" type="number" placeholder="Page Number" />
-        <input [(ngModel)]="params.pageSize" name="pageSize" type="number" placeholder="Page Size" />
+        <input [(ngModel)]="params.pageNumber" name="pageNumber" type="number" placeholder="Page Number" required />
+        <input [(ngModel)]="params.pageSize" name="pageSize" type="number" placeholder="Page Size" required />
         <button type="submit">Filter Villages</button>
       </form>
     </section>
@@ -66,7 +66,7 @@ import { Village, PaginatedResult, PaginationParams } from '../../models/village
     <section *ngIf="pagination">
       <p>Page {{ pagination.currentPage }} of {{ pagination.totalPages }}</p>
       <button (click)="changePage(params.pageNumber - 1)" [disabled]="params.pageNumber <= 1">Previous</button>
-      <button (click)="changePage(params.pageNumber + 1)" [disabled]="params.pageNumber >= pagination.totalPages">Next</button>
+      <button (click)="changePage(params.pageNumber + 1)" [disabled]="!pagination || params.pageNumber >= pagination.totalPages">Next</button>
     </section>
   `,
   styles: [
@@ -113,7 +113,7 @@ import { Village, PaginatedResult, PaginationParams } from '../../models/village
 export class VillagesComponent implements OnInit {
   villages: Village[] = [];
   selectedVillage: Village | null = null;
-  pagination: any = null;
+  pagination: { currentPage: number; totalPages: number; pageSize: number; totalItems: number } | null = null;
   params: PaginationParams = {
     pageNumber: 1,
     pageSize: 10,
@@ -163,7 +163,7 @@ export class VillagesComponent implements OnInit {
   }
 
   changePage(pageNumber: number): void {
-    if (pageNumber >= 1 && pageNumber <= this.pagination.totalPages) {
+    if (this.pagination && pageNumber >= 1 && pageNumber <= this.pagination.totalPages) {
       this.params.pageNumber = pageNumber;
       this.loadVillages();
     }

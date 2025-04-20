@@ -16,6 +16,7 @@ import { UserGroupsComponent } from './features/user-groups/user-groups.componen
 import { RejectionReasonsComponent } from './features/rejection-reasons/rejection-reasons.component';
 import { WeightSettingsComponent } from './features/weight-settings/weight-settings.component';
 import { AdminComponent } from './features/admin/admin.component'; 
+import { VillagesComponent } from './features/village/villages.component';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -61,6 +62,12 @@ export const routes: Routes = [
   {
     path: 'governorates',
     component: GovernoratesComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] },
+  },
+  {
+    path: 'villages',
+    component: VillagesComponent,
     canActivate: [AuthGuard],
     data: { roles: ['Admin'] },
   },
